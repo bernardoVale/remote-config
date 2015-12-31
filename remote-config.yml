@@ -3,5 +3,7 @@
 - hosts: all
   remote_user: root
   gather_facts: False
+  pre_tasks:
+   - set_fact: ansible_system=Linux
   roles:
     - remote-config

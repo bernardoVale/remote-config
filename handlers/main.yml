@@ -1,9 +1,16 @@
 ---
-- name: restart service
+- name: restart service Linux
   service:
     name: "{{item.item.item.service_handler}}"
     state: restarted
   when: ({{item.changed}} == True and "{{item.item.item.service_handler}}" != "")
   with_items:
-    - "{{ sync_files.results }}"
-  no_log: True
+    - "{{ sync_files_linux.results }}"
+  no_log: False
+
+- name: restart service HP-UX
+  command: /usr/sbin/inetd -c
+  when: ({{item.changed}} == True and "{{item.item.item.service_handler}}" != "")
+  with_items:
+    - "{{ sync_files_hp.results }}"
+  no_log: False

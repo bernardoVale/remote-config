@@ -1,23 +1,5 @@
-- name: Verifica se os arquivos existem
-  stat:
-    path: "{{ item.remote_path }}"
-  with_items:
-    - "{{ remote_files }}"
-  register: files_stat
-  no_log: True
+- include: Linux.yml
+  when: ansible_system == 'Linux'
 
-- name: Sincroniza os arquivos
-  copy: src=/remote-configs/{{ folder_name }}/{{ inventory_hostname }}/{{item.item.file_name}} dest="{{item.item.remote_path}}"
-  when: item.stat.exists
-  no_log: True
-  notify: restart service
-  register: sync_files
-  with_items:
-    - "{{files_stat.results}}"
-
-- name: Arquivo remoto nao encontrado
-  fail: msg="O arquivo {{ item.item.remote_path }} nao foi encontrado no servidor"
-  when: item.stat.exists == False
-  with_items:
-    - "{{files_stat.results}}"
-  no_log: True
+- include: HP-UX.yml
+  when: ansible_system == 'HP-UX'
