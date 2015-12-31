@@ -1,0 +1,8 @@
+---
+- hosts: all
+  remote_user: root
+  gather_facts: False
+
+  tasks:
+    - debug:
+        msg: "hosts: {{modified_hosts}}"

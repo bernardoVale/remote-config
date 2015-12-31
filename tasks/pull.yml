@@ -1,0 +1,27 @@
+- hosts: all
+  gather_facts: True
+  remote_user: root
+
+  tasks:
+    - name: Verifica se os arquivos existem
+      stat:
+        path: "{{ item.remote_path }}"
+      with_items:
+        - "{{ remote_files }}"
+      register: files_stat
+      no_log: True
+
+    - name: Recupera os arquivos do host remoto
+      fetch: src="{{item.item.remote_path}}" dest=/remote-configs/{{ inventory_hostname }}/{{item.item.file_name}} flat=yes
+      when: item.stat.exists
+      no_log: False
+      register: sync_files
+      with_items:
+        - "{{files_stat.results}}"
+
+    - name: Arquivo remoto nao encontrado
+      fail: msg="O arquivo {{ item.item.remote_path }} nao foi encontrado no servidor"
+      when: item.stat.exists == False
+      with_items:
+        - "{{files_stat.results}}"
+      no_log: True

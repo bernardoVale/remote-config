@@ -1,0 +1,9 @@
+---
+- name: restart service
+  service:
+    name: "{{item.item.item.service_handler}}"
+    state: restarted
+  when: ({{item.changed}} == True and "{{item.item.item.service_handler}}" != "")
+  with_items:
+    - "{{ sync_files.results }}"
+  no_log: True

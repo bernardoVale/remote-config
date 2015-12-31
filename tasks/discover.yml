@@ -1,0 +1,22 @@
+- hosts: all
+  gather_facts: False
+  remote_user: root
+  vars:
+    files: 
+      - nrpe.cfg
+      - monitoramento.json
+      - alertlog.json
+  tasks:
+    - name: Procura entrada para os arquivos
+      shell: find / -name {{item}}
+      with_items:
+        - "{{ files }}"
+      register: f_result
+      ignore_errors: True
+
+    - name: Cria o script com os resultados
+      template: src=../templates/host_vars.j2.sh dest=/tmp/{{inventory_hostname}}_hostvars.sh owner=root group=root mode=0755
+      delegate_to: localhost
+
+    - name: FIM
+      pause: prompt="Foi gerado um script para cada host, valide seu resultado e execute para gerar as variaveis dessa role de acordo com os arquivos que quer gerenciar [Enter]"

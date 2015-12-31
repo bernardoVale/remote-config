@@ -1,0 +1,11 @@
+---
+# Default somente o nrpe
+# remote_files:
+# 	- one: {
+# 		file_name: "nrpe.cfg",
+# 	  	service_handler: "nrpe",
+# 	  	remote_path: "/etc/nagios/nrpe.cfg"
+# 	}
+remote_files:
+  - {file_name: nrpe.cfg,service_handler: nrpe,remote_path: /etc/nagios/nrpe.cfg}
+  - {file_name: monitoramento.json,service_handler: null,remote_path: /foo/bar/monitoramento.json}

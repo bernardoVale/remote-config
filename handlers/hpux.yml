@@ -1,0 +1,7 @@
+---
+- name: restart service
+  command: /usr/sbin/inetd -c
+  when: ({{item.changed}} == True and "{{item.item.item.service_handler}}" != "")
+  with_items:
+    - "{{ sync_files.results }}"
+  no_log: True
