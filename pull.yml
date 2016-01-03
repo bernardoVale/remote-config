@@ -1,3 +1,5 @@
+---
+# Used to pull all managed files
 - hosts: all
   gather_facts: True
   remote_user: root
@@ -9,12 +11,10 @@
       with_items:
         - "{{ remote_files }}"
       register: files_stat
-      no_log: True
 
     - name: Recupera os arquivos do host remoto
-      fetch: src="{{item.item.remote_path}}" dest=/remote-configs/{{ inventory_hostname }}/{{item.item.file_name}} flat=yes
+      fetch: src="{{item.item.remote_path}}" dest=/remote-configs/{{folder_name}}/{{ inventory_hostname }}/{{item.item.file_name}} flat=yes
       when: item.stat.exists
-      no_log: False
       register: sync_files
       with_items:
         - "{{files_stat.results}}"
@@ -24,4 +24,3 @@
       when: item.stat.exists == False
       with_items:
         - "{{files_stat.results}}"
-      no_log: True
