@@ -1,3 +1,5 @@
+---
+# This is used to find the locations of all files from the variable files.
 - hosts: all
   gather_facts: False
   remote_user: root
