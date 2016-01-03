@@ -9,7 +9,7 @@
 - name: Sincroniza os arquivos
   copy: src=/remote-configs/{{ folder_name }}/{{ inventory_hostname }}/{{item.item.file_name}} dest="{{item.item.remote_path}}"
   when: item.stat.exists
-  no_log: False
+  no_log: True
   notify: restart service HP-UX
   register: sync_files_hp
   with_items:
