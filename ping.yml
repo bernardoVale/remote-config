@@ -1,5 +1,5 @@
 ---
-
+#Used to test conectivity to nrpe hosts
 - hosts: nrpe
   remote_user: root
   gather_facts: False

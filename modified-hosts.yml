@@ -1,7 +1,0 @@
----
-
-- hosts: all
-  remote_user: root
-  gather_facts: False
-  roles:
-    - { role: remote-config, when: inventory_hostname in modified_hosts}
