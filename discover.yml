@@ -17,7 +17,7 @@
       ignore_errors: True
 
     - name: Cria o script com os resultados
-      template: src=../templates/host_vars.j2.sh dest=/tmp/{{inventory_hostname}}_hostvars.sh owner=root group=root mode=0755
+      template: src=templates/host_vars.j2.sh dest=/tmp/{{inventory_hostname}}_hostvars.sh owner=root group=root mode=0755
       delegate_to: localhost
 
     - name: FIM
