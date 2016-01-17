@@ -8,9 +8,16 @@
       - nrpe.cfg
       - monitoramento.json
       - alertlog.json
+    searched_paths:
+      - /etc
+      - /usr/local
+      - /usr/lib
+      - /usr/lib64
+      - /opt
   tasks:
+
     - name: Procura entrada para os arquivos
-      shell: find / -name {{item}}
+      find: paths={{searched_paths}} patterns={{item}} recurse=yes
       with_items:
         - "{{ files }}"
       register: f_result
