@@ -1,6 +1,7 @@
 ---
 # Used to pull all managed files
 - hosts: all
+  strategy: free
   gather_facts: True
   remote_user: root
 
@@ -13,7 +14,7 @@
       register: files_stat
 
     - name: Recupera os arquivos do host remoto
-      fetch: src="{{item.item.remote_path}}" dest=/remote-configs/{{folder_name}}/{{ inventory_hostname }}/{{item.item.file_name}} flat=yes
+      fetch: src="{{item.item.remote_path}}" dest=/remote-configs/{{folder_name}}/{{ inventory_hostname }}/{{item.item.file_name}} flat=yes fail_on_missing=yes validate_checksum=yes
       when: item.stat.exists
       register: sync_files
       with_items:

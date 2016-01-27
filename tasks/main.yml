@@ -1,5 +1,1 @@
-- include: Linux.yml
-  when: ansible_system == 'Linux'
-
-- include: HP-UX.yml
-  when: ansible_system == 'HP-UX'
+- include: "{{ansible_system}}.yml"
